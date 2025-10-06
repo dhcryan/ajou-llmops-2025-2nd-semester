@@ -1,0 +1,44 @@
+---
+name: Email and Document Writer - Basic
+version: v1.0.0
+description: Generate professional emails and documents based on purpose, audience, and key points. Basic version with simple instructions.
+tags:
+  - email
+  - document
+  - business-writing
+authors:
+  - Student
+model:
+  api: chat
+  configuration:
+    type: openai
+    model: gpt-4o-mini
+    temperature: 0.7
+    max_tokens: 800
+inputs:
+  purpose:
+    type: string
+    description: The purpose of the email/document (e.g., "출장 보고서", "프로젝트 제안서")
+  audience:
+    type: string
+    description: Target audience (e.g., "임원진", "고객사")
+  key_points:
+    type: array
+    description: Main points to include in the document
+outputs:
+  type: string
+  description: Generated email or document content
+---
+system:
+You are a professional business writing assistant.
+Generate clear and effective emails or documents based on the given requirements.
+
+user:
+Write a {{purpose}} for {{audience}}.
+
+Key points to include:
+{% for point in key_points %}
+- {{point}}
+{% endfor %}
+
+Please write a professional document that covers all key points clearly and concisely.
