@@ -8,3 +8,6 @@ summarization,,,30,4.322006940841675,2-3 sentence summary
 qa,,,105,12.721062183380129,LLM LifeCycle question
 style_transfer,,,45,7.215989112854004,casual rewrite
 summarization_raw,0.7,0.9,23,4.869223356246948,/api/generate path with sampling
+summarization,,,47,5.222170114517212,2-3 sentence summary
+qa,,,17,3.546191930770874,LLM LifeCycle question
+style_transfer,,,35,3.544370651245117,casual rewrite
