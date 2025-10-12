@@ -1,0 +1,69 @@
+# ==============================
+# models.yaml
+# Model configurations for RAG Assignment
+# ==============================
+
+# Embedding Model Configuration
+embedding:
+  model_name: "paraphrase-multilingual-MiniLM-L12-v2"  # 가벼운 한국어 지원 모델 (torch 2.6 미만 호환)
+  # Alternative: "intfloat/multilingual-e5-large" or "BAAI/bge-m3"
+  dimension: 384  # MiniLM dimension (빠르고 안정적)
+  batch_size: 32
+  normalize: true
+  device: "cpu"  # CPU 사용 (안정성 우선)
+
+# Pinecone Configuration
+pinecone:
+  index_name: "rag-assignment-korquad"
+  metric: "cosine"  # cosine, dotproduct, or euclidean
+  dimension: 384  # MiniLM dimension (models.yaml의 embedding.dimension과 일치)
+  cloud: "aws"
+  region: "us-east-1"
+
+# BM25 Configuration
+bm25:
+  k1: 1.5  # Term frequency saturation
+  b: 0.75  # Length normalization
+
+# Hybrid Search Configuration
+hybrid:
+  method: "rrf"  # "rrf" or "weighted"
+  # RRF parameters
+  rrf_k: 60  # Rank constant (higher = more balanced)
+  # Weighted parameters
+  alpha: 0.5  # Weight for dense (1-alpha for BM25)
+  dense_weight: 0.5
+  bm25_weight: 0.5
+
+# Reranker Configuration
+reranker:
+  model_name: "jinaai/jina-reranker-v2-base-multilingual"
+  # Alternative: "BAAI/bge-reranker-v2-m3"
+  top_n: 20  # Initial candidates before reranking (20으로 축소 - 속도 향상)
+  top_k: 10   # Final results after reranking
+  batch_size: 32  # 배치 크기 증가 (16 → 32)
+
+# Chunking Configuration
+chunking:
+  chunk_size: 512  # tokens
+  chunk_overlap: 128  # tokens
+  method: "sliding_window"  # or "semantic"
+  preserve_structure: true  # Keep tables, lists, etc.
+
+# Retrieval Configuration
+retrieval:
+  top_k: 10  # Final number of results
+  top_n: 20  # Candidates for reranking (100 → 20으로 축소)
+  min_score: 0.0  # Minimum relevance score
+  deduplicate: true  # Remove duplicate documents
+  max_chunks_per_doc: 3  # Maximum chunks from same document
+
+# Evaluation Configuration
+evaluation:
+  metrics:
+    - "recall@5"
+    - "recall@10"
+    - "mrr@10"
+    - "ndcg@10"
+  query_count: 50  # Number of test queries
+  random_seed: 42
