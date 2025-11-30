@@ -1,0 +1,8 @@
+{
+  "tool_calls": "(collect from LangSmith traces)",
+  "turns_with_tool": "(collect by run_name 'nist_rag_tool')",
+  "graph_nodes_order": [
+    "agent_node"
+  ],
+  "latency_token_usage": "(collect from trace metadata)"
+}
