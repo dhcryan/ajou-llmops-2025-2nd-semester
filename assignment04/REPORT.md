@@ -108,11 +108,11 @@
 
 | # | 질문 | 참조 문서 | 결과 요약 |
 |---|------|----------|----------|
-| 1 | AI RMF의 코어 기능을 간단히 설명해줘 | AI RMF p.24 | GOVERN, MAP, MEASURE, MANAGE 4가지 기능 설명 ✅ |
-| 2 | CSF 2.0에서 식별(Identify) 기능의 주요 항목은? | CSF 2.0 p.19 | ID.AM(자산관리), ID.RA(위험평가), ID.IM(개선) 정확히 언급 ✅ |
-| 3 | Zero Trust에서 자산 접근 제어의 원칙은? | Zero Trust p.9 | 최소 접근, 지속적 인증/승인 원칙 설명 ✅ |
-| 4 | AI 위험 평가에서 데이터 거버넌스 관련 지침은? | AI RMF p.27, 43 | 개인정보 보호, 다양성 팀 구성, 역할 정의 등 상세 설명 ✅ |
-| 5 | CSF 2.0의 보호(Protect) 영역에서 권장 통제는? | CSF 2.0 p.7 | PROTECT 영역의 접근 제어, 데이터 보안 등 설명 ✅ |
+| 1 | AI RMF의 코어 기능을 간단히 설명해줘 | AI RMF p.24 | GOVERN, MAP, MEASURE, MANAGE 4가지 기능 설명 |
+| 2 | CSF 2.0에서 식별(Identify) 기능의 주요 항목은? | CSF 2.0 p.19 | ID.AM(자산관리), ID.RA(위험평가), ID.IM(개선) 정확히 언급 |
+| 3 | Zero Trust에서 자산 접근 제어의 원칙은? | Zero Trust p.9 | 최소 접근, 지속적 인증/승인 원칙 설명 |
+| 4 | AI 위험 평가에서 데이터 거버넌스 관련 지침은? | AI RMF p.27, 43 | 개인정보 보호, 다양성 팀 구성, 역할 정의 등 상세 설명 |
+| 5 | CSF 2.0의 보호(Protect) 영역에서 권장 통제는? | CSF 2.0 p.7 | PROTECT 영역의 접근 제어, 데이터 보안 등 설명 |
 
 **평가**: 모든 질문에 대해 **정확한 문서/페이지 출처**를 언급하며 답변함. 한국어 답변 품질 양호.
 
@@ -164,21 +164,21 @@ os.environ["LANGSMITH_PROJECT"] = "nist-rag-project"
 
 ## 5. 자기 평가
 
-### 5.1 잘 된 점 ✅
+### 5.1 잘 된 점
 
 1. **정확한 출처 인용**: RAG Chain이 문서명/페이지 번호를 포함한 답변 생성에 성공
 2. **시스템 통합**: RAG → Tool → Agent → LangGraph 계층 구조가 깔끔하게 연결됨
 3. **LangSmith 트레이싱**: 모든 실행이 프로젝트별로 태깅되어 추적 가능
 4. **다국어 처리**: 영문 PDF 기반이지만 한국어 질의/답변이 자연스럽게 동작
 
-### 5.2 아쉬운 점 ⚠️
+### 5.2 아쉬운 점
 
 1. **Memory 활용 한계**: ConversationBufferMemory를 사용했으나, 긴 대화에서 컨텍스트 윈도우 초과 가능성 미검증
 2. **에러 핸들링 부족**: PDF 로딩 실패, Pinecone 연결 실패 등 예외 상황 처리 미흡
 3. **평가 지표 부재**: 답변 정확도, 지연 시간, 토큰 사용량 등 정량적 평가 미실시
 4. **단순한 그래프 구조**: 현재 그래프가 `START → agent_node → END` 단일 경로로 분기/루프 없음
 
-### 5.3 다음에 개선하고 싶은 점 🚀
+### 5.3 다음에 개선하고 싶은 점
 
 1. **멀티 에이전트 구조**: 문서별 전문 에이전트 + 라우터 에이전트 구성
 2. **스트리밍 응답**: `stream()` 메서드를 활용한 실시간 답변 출력
@@ -198,10 +198,3 @@ os.environ["LANGSMITH_PROJECT"] = "nist-rag-project"
 
 특히 각 계층(RAG Chain → Tool → Agent → Graph → Tracing)이 어떻게 유기적으로 연결되는지 이해하는 것이 가장 큰 학습 포인트였다. 향후 프로덕션 환경에서는 평가 파이프라인 자동화와 그래프 구조 고도화를 통해 더욱 견고한 시스템을 구축할 수 있을 것이다.
 
----
-
-**첨부 파일**:
-- `01_nist_rag.ipynb`: RAG Chain 구현 및 테스트
-- `02_nist_rag_agent.ipynb`: Agent + LangGraph 구현
-- `assignment04/results/rag_results.json`: RAG 질의 결과
-- `assignment04/results/agent_graph_summary.json`: Agent/Graph 실행 요약
